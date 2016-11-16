@@ -16,11 +16,13 @@
 package br.ufrn.fonoweb.service;
 
 import br.ufrn.fonoweb.model.Arquivo;
+import br.ufrn.fonoweb.model.DescritorVoz;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Named;
@@ -44,6 +46,7 @@ public class ArquivoService extends CrudService<Arquivo, Long> {
         boolean status = false;
 
         try {
+            
             FileUtils.writeByteArrayToFile(new File(this.getDataStore().concat(fileName)), contents);
             status = true;
         } catch (IOException ex) {
@@ -64,7 +67,7 @@ public class ArquivoService extends CrudService<Arquivo, Long> {
 
     public boolean deleteFile(String fileName) {
         boolean result;
-        File file=(new File(this.getDataStore().concat(fileName)));
+        File file = (new File(this.getDataStore().concat(fileName).concat(".WAV")));
         result = file.delete();
         return result;
     }
@@ -84,4 +87,6 @@ public class ArquivoService extends CrudService<Arquivo, Long> {
                 .concat(FilenameUtils.getExtension(originalFile));
         return result;
     }
+
+    
 }

@@ -25,6 +25,7 @@ import javax.inject.Named;
  */
 @Named
 @ViewScoped
-public class DescritorVozMBean extends CrudMBean<DescritorVoz, Long>{
-    
+public class DescritorVozMBean extends CrudMBean<DescritorVoz, Long> {
+
+
 }

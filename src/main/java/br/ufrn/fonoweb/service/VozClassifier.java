@@ -15,11 +15,31 @@
  */
 package br.ufrn.fonoweb.service;
 
+import javax.inject.Named;
+
 /**
  *
  * @author yuri
  */
+@Named
 public class VozClassifier {
-    //classificador do sinal devoz, recebe o descritor e compara com os do banco, retornando 
-    //o diagnostico.
+
+    public String resultadoDiagnostico(double[] descritor) {
+        double variancia = 0.0;
+        String diagnostico;
+
+        variancia = FuncoesUtil.calcularVariancia(descritor, 34, 69);
+        if (variancia < 1.0) {
+            diagnostico = "Doente";
+        } else {
+            variancia = FuncoesUtil.calcularVariancia(descritor, 0, 29);
+            if (variancia >= 1.0) {
+                diagnostico = "Doente";
+            } else {
+                diagnostico = "Saudavel";
+            }
+
+        }
+        return diagnostico;
+    }
 }

@@ -45,7 +45,8 @@ public class DescritorVoz extends AbstractBean<DescritorVoz, Long> {
     @OneToOne
     private Arquivo arquivo;
 
-    private Double[] descritor;
+    private double[] descritor;
+    
     private String descricao;
 
     @Column(name = "data_ativacao")

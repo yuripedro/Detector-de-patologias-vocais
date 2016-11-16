@@ -54,6 +54,9 @@ public class Arquivo extends AbstractBean<Arquivo, Long> {
 
     @ManyToOne
     private Usuario usuario;
+    
+    @Column(nullable = true, unique = false)
+    private String resultado;
 
     @Override
     public int compareTo(Arquivo o) {

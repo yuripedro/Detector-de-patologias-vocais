@@ -16,10 +16,14 @@
 package br.ufrn.fonoweb.view;
 
 import br.ufrn.fonoweb.model.Arquivo;
+import br.ufrn.fonoweb.model.DescritorVoz;
 import javax.inject.Named;
 import br.ufrn.fonoweb.model.Usuario;
 import br.ufrn.fonoweb.service.ArquivoService;
+import br.ufrn.fonoweb.service.VozClassifier;
+import br.ufrn.fonoweb.service.VozProcessor;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -28,6 +32,7 @@ import java.util.Map;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.SessionScoped;
 import javax.inject.Inject;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import lombok.Getter;
 import lombok.Setter;
 import org.primefaces.event.FileUploadEvent;
@@ -46,7 +51,7 @@ public class UsuarioMBean extends CrudMBean<Usuario, Long> {
     @Getter
     @Setter
     private boolean uploadFile;
-    
+
     @Getter
     @Setter
     private Arquivo filePlaying;
@@ -69,16 +74,24 @@ public class UsuarioMBean extends CrudMBean<Usuario, Long> {
 
     @Inject
     private ArquivoService arquivoService;
-    
-    private  String codedFileNameTemp="";
-    
+
+    @Inject
+    private ArquivoMBean arquivoMBean;
+
+    @Inject
+    private VozProcessor vozProcessor;
+
+    @Inject
+    private VozClassifier vozClassifier;
+
     @Override
     public void changeToInsertState() {
         this.setBean(null);
         super.changeToInsertState();
     }
-
-      public void startUploadFile(Long id) {
+    
+    
+    public void startUploadFile(Long id) {
         setCurrentState(SEARCH_STATE);
         this.setUploadFile(true);
         setBean(findOne(id));
@@ -92,7 +105,7 @@ public class UsuarioMBean extends CrudMBean<Usuario, Long> {
         this.setUploadFile(false);
     }
 
-public void handleFileUpload(FileUploadEvent event) {
+    public void handleFileUpload(FileUploadEvent event) {
         if (event.getFile() != null) {
             mapUploadedFiles.put(event.getFile().getFileName(), event.getFile().getContents());
             saveFiles();
@@ -102,7 +115,7 @@ public void handleFileUpload(FileUploadEvent event) {
         }
     }
 
-   public void saveFiles() {
+    public void saveFiles() {
         String fileName = "";
         boolean result = true;
         try {
@@ -110,7 +123,6 @@ public void handleFileUpload(FileUploadEvent event) {
                 fileName = entrySet.getKey();
                 byte[] content = entrySet.getValue();
                 String codedFileName = arquivoService.getEncodedFileName(fileName, content);
-                codedFileNameTemp = codedFileName;
                 arquivoService.saveFile(codedFileName, content);
                 //Adiciona os arquivos ao usuário
                 this.addArquivoUsuario(fileName, codedFileName);
@@ -137,12 +149,22 @@ public void handleFileUpload(FileUploadEvent event) {
     }
 
     public void processDeleteArquivo(Arquivo arquivo) {
+        String nome = arquivo.getNome();
+        String nomeSemExtencao = "";
+        for (int i = 0; i < nome.length(); i++) {
+            char letra = nome.charAt(i);
+            if (letra == '.') {
+                break;
+            } else {
+                nomeSemExtencao += letra;
+            }
+        }
         if (getBean().getArquivos().contains(arquivo)) {
             getBean().getArquivos().remove(arquivo);
             processUpdate();
             setCurrentState(DATAIL_STATE);
-            arquivoService.deleteFile(this.codedFileNameTemp);
-            
+            arquivoService.deleteFile(nomeSemExtencao);
+
         }
     }
 
@@ -151,6 +173,23 @@ public void handleFileUpload(FileUploadEvent event) {
             setMedia(new DefaultStreamedContent(new ByteArrayInputStream(arquivoService.openFile(arquivo.getNome()))));
             setFilePlaying(arquivo);
         }
+    }
+
+    public void gerarDiagnostico(Arquivo arquivo) throws UnsupportedAudioFileException, IOException {
+        double[] descritorPaciente = null;
+
+        String diagnostico;
+
+        descritorPaciente = vozProcessor.gerar_classificador(0.5, 1300, 0.77, arquivoService.getDataStore().concat(arquivo.getNome()));
+
+        diagnostico = vozClassifier.resultadoDiagnostico(descritorPaciente);
+        
+        arquivo.setResultado(diagnostico);
+        
+        getBean().addArquivo(arquivo);
+        
+        this.save();
+
     }
 
 }
