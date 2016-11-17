@@ -34,9 +34,9 @@ public class VozClassifier {
         } else {
             variancia = FuncoesUtil.calcularVariancia(descritor, 0, 29);
             if (variancia >= 1.0) {
-                diagnostico = "Doente";
+                diagnostico = "Indicios de voz doente";
             } else {
-                diagnostico = "Saudavel";
+                diagnostico = "Indicios de voz saudavel";
             }
 
         }

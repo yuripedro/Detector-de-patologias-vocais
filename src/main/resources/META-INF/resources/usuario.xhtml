@@ -40,7 +40,7 @@
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          rowsPerPageTemplate="5,10,15">
                                 <f:facet name="header">
-                                    Relação de usuários
+                                    Relação de Pacientes
                                 </f:facet>
 
                                 <p:column headerText="Id" sortBy="#{usuario.id}">
@@ -129,17 +129,18 @@
                                 <h:outputText value="#{arquivo.resultado}"/>
                             </p:column>
                             <p:column headerText="Ações" width="180" style="alignment-adjust: central; vertical-align: central" >
-                           
+
+
+                                <p:commandButton actionListener="#{usuarioMBean.gerarDiagnostico(arquivo)}" update="@form"  icon="ui-icon-plusthick" title="Diagnostico" />
                                 <p:commandButton actionListener="#{usuarioMBean.processDeleteArquivo(arquivo)}" update="@form" icon="ui-icon-trash" title="Excluir" >
                                     <p:confirm header="Confirmação" message="Tem certeza que deseja excluir o registro?" icon="ui-icon-alert"/>
                                 </p:commandButton>
-                                  <p:commandButton actionListener="#{usuarioMBean.gerarDiagnostico(arquivo)}" update="@form"  icon="ui-icon-plusthick" title="Diagnostico" />
                             </p:column>
                         </p:dataTable>
                     </h:panelGrid>
                     <p:commandButton value="Alterar" actionListener="#{usuarioMBean.startUpdate(usuarioMBean.bean.id)}" update="@form"/>  
                     <p:commandButton value="Cancelar/Voltar" actionListener="#{usuarioMBean.changeToListState()}" update="@form"/> 
-               
+
 
                 </p:panel>  
 
