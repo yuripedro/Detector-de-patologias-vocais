@@ -24,27 +24,18 @@ public class Usuario extends AbstractBean<Usuario, Long> {
 
     @Column(nullable = false, unique = false)
     private String nome;
-    
+
     @Column(nullable = false)
     private String cpf;
 
     @OneToMany(mappedBy = "usuario", orphanRemoval = true, cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER)             
+            fetch = FetchType.EAGER)
     private Set<Arquivo> arquivos = new TreeSet<>();
 
-    @OneToMany(mappedBy = "usuario", orphanRemoval = true,
-            fetch = FetchType.EAGER)      
-    private Set<Resultado> resultados = new TreeSet<>();
-
-    
-    public void addArquivo(Arquivo arquivo){
+    public void addArquivo(Arquivo arquivo) {
         arquivos.add(arquivo);
     }
-    
-    public void addResultado(Resultado resultado){
-        resultados.add(resultado);
-    }
-    
+
     @Override
     public int compareTo(Usuario objeto) {
         int result;

@@ -16,7 +16,6 @@
 package br.ufrn.fonoweb.view;
 
 import br.ufrn.fonoweb.model.Arquivo;
-import br.ufrn.fonoweb.model.DescritorVoz;
 import javax.inject.Named;
 import br.ufrn.fonoweb.model.Usuario;
 import br.ufrn.fonoweb.service.ArquivoService;

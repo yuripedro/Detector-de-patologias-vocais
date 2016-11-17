@@ -49,9 +49,6 @@ public class Arquivo extends AbstractBean<Arquivo, Long> {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date dataInclusao;
 
-    @OneToOne
-    private DescritorVoz descritor;
-
     @ManyToOne
     private Usuario usuario;
     

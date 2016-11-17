@@ -16,13 +16,11 @@
 package br.ufrn.fonoweb.service;
 
 import br.ufrn.fonoweb.model.Arquivo;
-import br.ufrn.fonoweb.model.DescritorVoz;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Named;
@@ -71,6 +69,8 @@ public class ArquivoService extends CrudService<Arquivo, Long> {
         result = file.delete();
         return result;
     }
+    
+    
 
     public String getEncodedFileName(String originalFile, byte[] contents) {
         MessageDigest md = null;

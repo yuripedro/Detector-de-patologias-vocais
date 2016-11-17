@@ -153,9 +153,9 @@ public class VozProcessor {
 
         double[][] vetorCorrJanelas = new double[10][];
         for (int j = 0; j < 10; j++) {
-            // double janelaAleatoria = inicio_janela + ((vectorNormalizado.length - inicio_janela) * Math.random());
-            // janelaAleatoria = Math.floor(janelaAleatoria - (tamanho + 1));
-            int janelaAleatoria = 0;
+            double janelaAleatoria = inicio_janela + ((vectorNormalizado.length - inicio_janela) * Math.random());
+            janelaAleatoria = Math.floor(janelaAleatoria - (tamanho + 1));
+            
             int janela_fim = (int) Math.floor(janelaAleatoria + tamanho);
             vetorCorrJanelas[j] = FuncoesUtil.autCorrentropyCoef(FuncoesUtil.subArray(vectorNormalizado, (int) janelaAleatoria, janela_fim), kernel);
         }
@@ -187,7 +187,9 @@ public class VozProcessor {
 
         vetorModulo = FuncoesUtil.calculaModulo(vetorCorr_Final);
         vetorSort_final = FuncoesUtil.quickSortReverso(vetorModulo, 0, vetorModulo.length - 1);
-
+        
+        vetorModulo = FuncoesUtil.calculaModulo(vetorCorr_Final);
+        
         int[] posicoes_pico_Final = null;
         int posic = (int) numpicos;
         posicoes_pico_Final = FuncoesUtil.posicao(vetorModulo, vetorSort_final, posic);
@@ -196,8 +198,9 @@ public class VozProcessor {
 
         vetorClassificador_Final = FuncoesUtil.calculaVetorPicos(posicoes_pico_Final, vetorCorr_Final, numpicos, vetorModulo.length);
 
+
         //==========================================================================
-        //Passo 9: Montar Matriz de classificador 
+        //Passo 8: Montar Matriz de classificador 
         //==========================================================================
         double[] vetorClassificador_Modulo_Final = new double[vetorClassificador_Final.length / 2];
         vetorClassificador_Modulo_Final = FuncoesUtil.calculaModulo(vetorClassificador_Final);
