@@ -1,7 +1,7 @@
 spring: 
   datasource:
     platform: postgres
-    url: jdbc:postgresql://localhost:5432/ProjetoFono
+    url: jdbc:postgresql://localhost:5433/ProjetoFono
     username: postgres
     password: time4815
 # Number of ms to wait before throwing an exception if no connection is available.
@@ -16,11 +16,40 @@ spring:
     hibernate:
         naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
 jsf:
-  PROJECT_STAGE: Development
+  PROJECT_STAGE: Production
+  FACELETS_LIBRARIES: /tags/tags.taglib.xml
   primefaces:
     theme: cupertino
-jsf-spring-boot-starter:
-  version: jsf-spring-boot-starter.version
+#joinfaces:
+#  version: @project.parent.version@
+#spring-boot:
+#  version: @project.parent.parent.version@
+#tomcat:
+#  version: @tomcat.version@
+#jetty:
+#  version: @jetty.version@
+#undertow:
+#  version: @undertow.version@
+#cdi:
+#  version: @cdi.version@
+#mojarra:
+#  version: @mojarra.version@
+#myfaces:
+#  version: @myfaces.version@
+#omnifaces:
+#  version: @omnifaces.version@
+#angularfaces:
+#  version: @angularfaces.version@
+#primefaces:
+#  version: @primefaces.version@
+#primefaces-extensions:
+#  version: @primefaces-extensions.version@
+#bootsfaces:
+#  version: @bootsfaces.version@
+#butterfaces:
+#  version: @butterfaces.version@
+#richfaces:
+#  version: @richfaces.version@
   
 app:
     dataStore: C://Users//yuri//Documents//DiretorioDeArquivos//

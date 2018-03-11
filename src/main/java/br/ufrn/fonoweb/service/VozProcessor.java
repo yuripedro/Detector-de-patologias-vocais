@@ -64,9 +64,9 @@ public class VozProcessor {
 
         double[][] vetorCorrJanelas = new double[10][];
         for (int j = 0; j < 10; j++) {
-            // double janelaAleatoria = inicio_janela + ((vectorNormalizado.length - inicio_janela) * Math.random());
-            // janelaAleatoria = Math.floor(janelaAleatoria - (tamanho + 1));
-            int janelaAleatoria = 0;
+             double janelaAleatoria = inicio_janela + ((vectorNormalizado.length - inicio_janela) * Math.random());
+             janelaAleatoria = Math.floor(janelaAleatoria - (tamanho + 1));
+            
             int janela_fim = (int) Math.floor(janelaAleatoria + tamanho);
             vetorCorrJanelas[j] = FuncoesUtil.autCorrentropyCoef(FuncoesUtil.subArray(vectorNormalizado, (int) janelaAleatoria, janela_fim), kernel);
         }

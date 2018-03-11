@@ -237,25 +237,12 @@ public class FuncoesUtil {
         int signal_length = signal.length;
         double[] Y = FuncoesUtil.zeros(signal_length);
         double b = 1.0 / (kernel * Math.sqrt(2 * Math.PI));
-        double constant = 0.0;
-
-        for (int m = 0; m < signal_length; m++) {
-            for (int n = m + 1; n < signal_length; n++) {
-                constant = constant - (1.0 / (500500.0)) * (b * (Math.exp(-((Math.pow(signal[n] - signal[n - m - 1], 2d)) / twokSizeSquare))));
-            }
-
-        }
 
         for (int m = 0; m < signal_length; m++) {
             for (int n = m + 1; n < signal_length; n++) {
                 Y[m] = Y[m] + ((1.0 / (signal_length - m)) * ((b * (Math.exp(-((Math.pow(signal[n] - signal[n - m - 1], 2d)) / twokSizeSquare))))));
 
             }
-
-        }
-
-        for (int m = 0; m < signal_length; m++) {
-            Y[m] = Y[m] + constant;
 
         }
 
