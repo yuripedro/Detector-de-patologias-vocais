@@ -28,11 +28,12 @@ public class VozClassifier {
         double variancia = 0.0;
         String diagnostico;
         //mudança nos limites antes era de 34 a 69
-        variancia = FuncoesUtil.calcularVariancia(descritor, 34, 70);
+        variancia = FuncoesUtil.calcularVariancia(descritor, 34, 69);
         if (variancia < 1.0) {
             diagnostico = "Indicios de voz doente";
         } else {
-            variancia = FuncoesUtil.calcularVariancia(descritor, 0, 29);
+                    //mudança nos limites antes era de 0 a 29
+            variancia = FuncoesUtil.calcularVariancia(descritor, 0, 30);
             if (variancia >= 1.0) {
                 diagnostico = "Indicios de voz doente";
             } else {
