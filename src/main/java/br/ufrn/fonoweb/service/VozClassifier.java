@@ -33,7 +33,7 @@ public class VozClassifier {
             diagnostico = "Indicios de voz doente";
         } else {
                     //mudança nos limites antes era de 0 a 29
-            variancia = FuncoesUtil.calcularVariancia(descritor, 0, 30);
+            variancia = FuncoesUtil.calcularVariancia(descritor, 0, 29);
             if (variancia >= 1.0) {
                 diagnostico = "Indicios de voz doente";
             } else {
